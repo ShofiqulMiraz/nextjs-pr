@@ -1,0 +1,13 @@
+.register {
+  max-width: 60%;
+  margin: 0 auto;
+  @media (max-width: 300px) {
+    max-width: 90%;
+  }
+  @media (max-width: 500px) {
+    max-width: 80%;
+  }
+}
+.registerHead {
+  text-align: center;
+}
