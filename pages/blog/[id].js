@@ -17,7 +17,9 @@ export default function Home({ blog }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const res = await fetch(`http://localhost:1337/blogs/${params.id}`);
+  const res = await fetch(
+    `https://strapi-mongodb-blog.herokuapp.com/blogs/${params.id}`
+  );
   const blog = await res.json();
   return {
     props: { blog },
