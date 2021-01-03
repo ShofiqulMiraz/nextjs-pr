@@ -11,7 +11,7 @@ export default function Home({ blogs }) {
       <main>
         {blogs.map((blog) => (
           <h1 key={blog.id}>
-            <Link href={`/blogs/?slug=${blog.slug}`}>
+            <Link href={`/blog/${blog.id}`}>
               <a>{blog.title}</a>
             </Link>
           </h1>
