@@ -16,11 +16,14 @@ export default function Home({ blog }) {
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ query }) {
+  console.log(query);
   const res = await fetch(
-    `https://strapi-mongodb-blog.herokuapp.com/blogs/${params.id}`
+    `https://strapi-mongodb-blog.herokuapp.com/blogs/?slug=${query.slug}`
   );
-  const blog = await res.json();
+  const result = await res.json();
+  const blog = result[0];
+  console.log(blog);
   return {
     props: { blog },
   };
