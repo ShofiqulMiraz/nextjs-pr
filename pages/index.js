@@ -21,8 +21,8 @@ export default function Home({ blogs }) {
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch(`https://strapi-mongodb-blog.herokuapp.com/blogs`);
+export async function getServerSideProps() {
+  const res = await fetch(`https://strapi-cloudinary.herokuapp.com/blogs`);
   const blogs = await res.json();
   return {
     props: { blogs },

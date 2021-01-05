@@ -1,13 +1,7 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function Home({ blog }) {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
       <Head>
@@ -18,25 +12,26 @@ export default function Home({ blog }) {
         <h1> {blog.title} </h1>
         <p>{blog.description}</p>
         by <p> {blog.author} </p>
+        <Image
+          src={blog.image[0].url}
+          alt="Picture of the author"
+          width={500}
+          height={500}
+        />
+        <Image
+          src={blog.image[1].url}
+          alt="Picture of the author"
+          width={500}
+          height={500}
+        />
       </div>
     </div>
   );
 }
 
-export async function getStaticPaths() {
-  return {
-    paths: [
-      { params: { id: "5ff12fd84a7b60228019938f" } },
-      { params: { id: "5ff0aa0f24725e00179b3f97" } },
-    ],
-
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const res = await fetch(
-    `https://strapi-mongodb-blog.herokuapp.com/blogs/${params.id}`
+    `https://strapi-cloudinary.herokuapp.com/blogs/${params.id}`
   );
   const blog = await res.json();
 
