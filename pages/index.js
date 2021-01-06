@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Link from "next/link";
+import Header from "../components/header/header";
 
-export default function Home({ blogs }) {
+export default function Home() {
   return (
     <div>
       <Head>
@@ -9,22 +9,8 @@ export default function Home({ blogs }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        {blogs.map((blog) => (
-          <h1 key={blog.id}>
-            <Link href={`/blog/${blog.id}`}>
-              <a>{blog.title}</a>
-            </Link>
-          </h1>
-        ))}
+        <Header />
       </main>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(`https://strapi-cloudinary.herokuapp.com/blogs`);
-  const blogs = await res.json();
-  return {
-    props: { blogs },
-  };
 }

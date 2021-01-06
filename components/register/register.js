@@ -1,15 +1,6 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Tooltip,
-  Select,
-  Checkbox,
-  Button,
-  AutoComplete,
-} from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
-const { Option } = Select;
+import { Form, Input, Button, message } from "antd";
+import { useRouter } from "next/router";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -41,194 +32,81 @@ const tailFormItemLayout = {
   },
 };
 
-const RegistrationForm = () => {
+const AddBlog = () => {
   const [form] = Form.useForm();
+  const router = useRouter();
+  const [submitting, setsubmitting] = useState(false);
 
-  const onFinish = (values) => {
-    console.log(values);
-  };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="88">+88</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
+  const handleAddPost = async (values) => {
+    try {
+      setsubmitting(true);
+      const response = await fetch(
+        `https://mern-blog-back.herokuapp.com/api/v1/posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
       );
+      const data = await response.json();
+
+      setsubmitting(false);
+      message.success("Added new blog successfully");
+      router.push("/");
+      return data;
+    } catch (error) {
+      message.error("Something Went Wrong, Try Again");
+      router.push("/register");
     }
   };
 
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
+  const onFinish = (values) => {
+    handleAddPost(values);
+  };
+
   return (
     <Form
       {...formItemLayout}
       form={form}
-      name="register"
+      name="addblog"
       onFinish={onFinish}
-      initialValues={{
-        prefix: "88",
-      }}
       scrollToFirstError
     >
       <Form.Item
-        name="email"
-        label="E-mail"
+        name="title"
+        label="Blog Title"
+        rules={[{ required: true, message: "You have to add blog Title" }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="description"
+        label="Blog description"
         rules={[
-          {
-            type: "email",
-            message: "The input is not valid E-mail!",
-          },
-          {
-            required: true,
-            message: "Please input your E-mail!",
-          },
+          { required: true, message: "You have to add blog description" },
         ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        name="password"
-        label="Password"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-          {
-            min: 8,
-            message: "Password Should Contain At Least 8 character",
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="confirmedpassword"
-        label="Confirm Password"
-        dependencies={["password"]}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Please confirm your password!",
-          },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-
-              return Promise.reject(
-                "The two passwords that you entered do not match!"
-              );
-            },
-          }),
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="nickname"
-        label={
-          <span>
-            Nickname&nbsp;
-            <Tooltip title="What do you want others to call you?">
-              <QuestionCircleOutlined />
-            </Tooltip>
-          </span>
-        }
-        rules={[
-          {
-            required: true,
-            message: "Please input your nickname!",
-            whitespace: true,
-          },
-        ]}
+        name="author"
+        label="Blog description"
+        rules={[{ required: true, message: "You have to add author name" }]}
       >
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="phone"
-        label="Phone Number"
-        rules={[
-          {
-            required: true,
-            message: "Please input your phone number!",
-          },
-        ]}
-      >
-        <Input
-          addonBefore={prefixSelector}
-          style={{
-            width: "100%",
-          }}
-        />
-      </Form.Item>
-
-      <Form.Item
-        name="website"
-        label="Website"
-        rules={[
-          {
-            required: true,
-            message: "Please input website!",
-          },
-        ]}
-      >
-        <AutoComplete
-          options={websiteOptions}
-          onChange={onWebsiteChange}
-          placeholder="website"
-        >
-          <Input />
-        </AutoComplete>
-      </Form.Item>
-
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value
-                ? Promise.resolve()
-                : Promise.reject("Should accept agreement"),
-          },
-        ]}
-        {...tailFormItemLayout}
-      >
-        <Checkbox>
-          I have read the <a href="">agreement</a>
-        </Checkbox>
-      </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
-          Register
+          {submitting ? "Adding New Blog.." : "Add A Blog"}
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default RegistrationForm;
+export default AddBlog;
