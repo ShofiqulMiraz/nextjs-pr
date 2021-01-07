@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Skeleton } from "antd";
 
 const Header = () => {
   const [blogs, setblogs] = useState([]);
@@ -17,13 +18,32 @@ const Header = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  const skeletonUI = () => (
+    <>
+      <Skeleton.Input style={{ width: 500, height: 20 }} active />
+      <br />
+      <Skeleton.Input style={{ width: 400, height: 20 }} active />
+      <br />
+      <Skeleton.Input style={{ width: 200, height: 20 }} active />
+    </>
+  );
   return (
     <>
       <h1>header</h1>
 
       {loading ? (
         <>
-          <p>loading posts....</p>
+          {skeletonUI()}
+          <div style={{ marginBottom: 30 }}></div>
+          {skeletonUI()}
+          <div style={{ marginBottom: 30 }}></div>
+          {skeletonUI()}
+          <div style={{ marginBottom: 30 }}></div>
+          {skeletonUI()}
+          <div style={{ marginBottom: 30 }}></div>
+          {skeletonUI()}
+          <div style={{ marginBottom: 30 }}></div>
         </>
       ) : (
         <>
