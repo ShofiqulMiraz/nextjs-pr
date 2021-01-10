@@ -1,4 +1,4 @@
-export default class APIFeature {
+export class APIFeature {
   constructor(query, queryString) {
     this.query = query;
     this.queryString = queryString;

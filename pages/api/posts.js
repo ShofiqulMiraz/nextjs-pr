@@ -1,6 +1,6 @@
 import connectDb from "./database/db";
 import Post from "./models/postmodel";
-import APIFeature from "./utils/apiFeature";
+import { APIFeature } from "./utils/apiFeature";
 
 const PostHandler = async (req, res) => {
   // GET ALL POST
