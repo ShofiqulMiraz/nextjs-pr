@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Skeleton } from "antd";
+import Link from "next/link";
 
 const Header = () => {
   const [blogs, setblogs] = useState([]);
@@ -7,9 +8,7 @@ const Header = () => {
 
   const fetchBlogs = async () => {
     setloading(true);
-    const res = await fetch(
-      "https://mern-blog-back.herokuapp.com/api/v1/posts"
-    );
+    const res = await fetch("/api/posts");
     const blogs = await res.json();
     setblogs(blogs);
 
@@ -49,7 +48,9 @@ const Header = () => {
         <>
           {blogs.map((blog, index) => (
             <div className="blog" key={index}>
-              <h1> {blog.title} </h1>
+              <Link href={`/blog/${blog._id}`}>
+                <a>{blog.title}</a>
+              </Link>
               <p> {blog.description} </p>
               <p> by {blog.author} </p>
             </div>

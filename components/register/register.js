@@ -40,16 +40,13 @@ const AddBlog = () => {
   const handleAddPost = async (values) => {
     try {
       setsubmitting(true);
-      const response = await fetch(
-        `https://mern-blog-back.herokuapp.com/api/v1/posts`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch(`/api/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       const data = await response.json();
 
       setsubmitting(false);
@@ -94,7 +91,7 @@ const AddBlog = () => {
 
       <Form.Item
         name="author"
-        label="Blog description"
+        label="Blog Author"
         rules={[{ required: true, message: "You have to add author name" }]}
       >
         <Input />

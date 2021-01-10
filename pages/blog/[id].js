@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 export default function Home({ blog }) {
   return (
@@ -18,10 +18,14 @@ export default function Home({ blog }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const res = await fetch(
-    `https://strapi-cloudinary.herokuapp.com/blogs/${params.id}`
-  );
+  const res = await fetch(`${BACKEND_URL}/api/posts/${params.id}`);
   const blog = await res.json();
+
+  if (!blog) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: { blog },
