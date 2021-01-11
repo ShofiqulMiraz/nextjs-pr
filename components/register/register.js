@@ -40,13 +40,16 @@ const AddBlog = () => {
   const handleAddPost = async (values) => {
     try {
       setsubmitting(true);
-      const response = await fetch(`/api/posts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `https://mern-blog-back.herokuapp.com/api/v1/posts`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      );
       const data = await response.json();
 
       setsubmitting(false);
