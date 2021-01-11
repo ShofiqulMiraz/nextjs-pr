@@ -10,7 +10,6 @@
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
     "antd": "^4.9.4",
-    "mongoose": "^5.11.11",
     "next": "10.0.4",
     "nprogress": "^0.2.0",
     "react": "17.0.1",

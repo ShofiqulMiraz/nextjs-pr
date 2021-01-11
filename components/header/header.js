@@ -8,7 +8,9 @@ const Header = () => {
 
   const fetchBlogs = async () => {
     setloading(true);
-    const res = await fetch("/api/posts");
+    const res = await fetch(
+      "https://mern-blog-back.herokuapp.com/api/v1/posts"
+    );
     const blogs = await res.json();
     setblogs(blogs);
 

@@ -1,5 +1,4 @@
 import Head from "next/head";
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 export default function Home({ blog }) {
   return (
@@ -18,7 +17,9 @@ export default function Home({ blog }) {
 }
 
 export async function getServerSideProps({ params }) {
-  const res = await fetch(`${BACKEND_URL}/api/posts/${params.id}`);
+  const res = await fetch(
+    `https://mern-blog-back.herokuapp.com/api/v1/posts/${params.id}`
+  );
   const blog = await res.json();
 
   if (!blog) {
