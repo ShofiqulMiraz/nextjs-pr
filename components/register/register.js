@@ -53,7 +53,7 @@ const AddBlog = () => {
       const data = await response.json();
 
       setsubmitting(false);
-      message.success("Added new blog successfully");
+      message.success("Added new blog successfully in the database");
       router.push("/");
       return data;
     } catch (error) {

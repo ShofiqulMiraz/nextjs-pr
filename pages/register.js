@@ -6,10 +6,10 @@ const Register = () => {
   return (
     <>
       <Head>
-        <title>Add new blog</title>
+        <title>Add New Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 className={styles.registerHead}>Add new blog</h1>
+      <h1 className={styles.registerHead}>Add New Blog</h1>
       <div className={styles.register}>
         <AddBlog />
       </div>
